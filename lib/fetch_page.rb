@@ -1,9 +1,6 @@
-class FetchPage
-	def initialize
-		@mechanize = Mechanize.new
-	end
+module FetchPage
 
-	def from_url(url)
-		@mechanize.get(url)
+	def self.from_url(url)
+		Mechanize.new.get(url)
 	end
 end
