@@ -8,6 +8,7 @@ class ScrapeData
 		@page.search('tr').each do |el|
 			mtg_hash = {}
 			mtg_hash[:time] = el.at('.date').text.strip unless el.at('.date').nil?
+
 			info = el.at('.info')
 			mtg_hash[:city] = info.at('.day_city').text.strip unless el.at('.day_city').nil?
 			mtg_hash[:name] = info.at('.name').text.strip unless el.at('.name').nil?
