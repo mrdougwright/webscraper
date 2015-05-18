@@ -1,4 +1,8 @@
-<h1>Hello World</h1>
+<%= javascript_tag do %>
+	window.places = <%= raw @places.to_json %>
+<% end %>
+
+<h1>Welcome! This is a map of the East Bay</h1>
 <div id='map-container'>
 	<div id='map-canvas'></div>
 </div>

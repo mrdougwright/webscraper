@@ -3,6 +3,10 @@ class PlacesController < ApplicationController
 		@place = Place.create(place_params)
 	end
 
+	def index
+		@places = Place.all
+	end
+
 private
 
 	def place_params

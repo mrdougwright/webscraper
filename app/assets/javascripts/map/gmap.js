@@ -2,11 +2,9 @@ $(window).load(function() {
   loadScript();
 });
 
-var map;
+var map, marker;
 
 function initialize() {
-  var markerCoords1 = new google.maps.LatLng(37.7919615,-122.2287941);
-  var markerCoords2 = new google.maps.LatLng(38.2919615,-122.7287941);
   var mapOptions = {
     center: new google.maps.LatLng(37.7919615,-122.2287941), // Oakland
     zoom: 12,
@@ -15,20 +13,9 @@ function initialize() {
   // initializing map
   map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
 
-  // simple marker
-  var marker = createMarker(markerCoords1, map, "Hi");
-
-  // custom marker
-  var customMarker = createCustomMarker(markerCoords2, map, "Hi");
-
-  // add infowindow when clicking on the simple marker marker
-  var info = createInfoWindow("Mtg title");
-  google.maps.event.addListener(marker, 'click', function() {
-    info.open(map,marker);
-  });
+  // places.forEach(showMapPoints)  >> Use Geocoder gem
+  showMapPoints(places[0]) // temporary until geocoded....
 } // <-- end of initializer
-
-
 
 function createInfoWindow(text){
   var infowindow = new google.maps.InfoWindow({
@@ -42,40 +29,39 @@ function getCurrentPosition(e){
   return markercoords;
 }
 
-var marker;
 function createMarker(coords, map, title){
-    marker = new google.maps.Marker({
+  marker = new google.maps.Marker({
     position: coords,
     map: map,
     title: title,
     draggable: false,
     animation: google.maps.Animation.DROP
   });
-    return marker;
-}
-function createCustomMarker(coords,map,title){
-    marker = new google.maps.Marker({
-    position: coords,
-    map: map,
-    title: title,
-    icon: createImage("/assets/icon.png"),
-    draggable: false,
-    animation: google.maps.Animation.DROP
-  }); 
-    return marker;
+  
+  // add infowindow when clicking on the simple marker marker
+  google.maps.event.addListener(marker, 'click', function() {
+    createInfoWindow(title).open(map,marker);
+  });
+
+  return marker;
 }
 
-function createImage(url){
-    var image = {
-    url: url,
-    // This marker is 20 pixels wide by 32 pixels tall.
-    size: new google.maps.Size(32, 32),
-    // The origin for this image is 0,0.
-    origin: new google.maps.Point(0,0),
-    // The anchor for this image is the base of the flagpole at 0,32.
-    anchor: new google.maps.Point(0, 32)
-  };
-  return image;
+function codeAddress(address){
+  var geocoding = new google.maps.Geocoder();
+
+  if(address.length > 0){
+    geocoding.geocode({'address': address},function(results, status){
+      if(status == google.maps.GeocoderStatus.OK){
+        createMarker(results[0].geometry.location, map, "testing")
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+  }
+}
+
+function showMapPoints(element, index, array){
+  codeAddress(element.address) // use geocoder gem instead
 }
 
 
