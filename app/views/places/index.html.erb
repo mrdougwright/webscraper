@@ -3,6 +3,17 @@
 <% end %>
 
 <h1>Welcome! This is a map of the East Bay</h1>
-<div id='map-container'>
-	<div id='map-canvas'></div>
+<div class='grid-container'>
+	<div id='map-container' class='col-2-3'>
+		<div id='map-canvas'></div>
+	</div>
+
+	<div id='legend' class='col-1-3'>
+		<dl>
+			<dt>Name</dt>    <dd class='name'></dd>
+			<dt>Address</dt> <dd class='address'></dd>
+			<dt>City</dt>    <dd class='city'></dd>
+			<dt>Time</dt>    <dd class='time'></dd>
+		</dl>
+	</div>
 </div>
