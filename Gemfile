@@ -26,6 +26,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # added after rails new
 gem 'rails_12factor', group: :production
 gem 'mechanize'
+gem 'geocoder' # for adding latitude and longitude to location-based tables
 # added after rails new ^^^^
 
 # Use ActiveModel has_secure_password
