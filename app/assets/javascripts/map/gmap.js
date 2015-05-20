@@ -3,7 +3,7 @@ $(window).load(function() {
 })
 
 var map, marker;
-var $legend = $('#legend')
+var infoWindows = [];
 
 function initialize() {
   var mapOptions = {
@@ -20,12 +20,19 @@ function mapPoints(loc_data, index, array) {
   createMarker(loc_data, map)
 }
 
-function renderLegend(loc_data) {
+function closeAllDumbWindows() {
+  for (var i=0; i < infoWindows.length; i++) {
+    infoWindows[i].close();
+  }
+}
+
+function renderLegend(loc_data,infowindow) {
+  var $legend = $('#legend')
   $legend.find('.name').text(loc_data.name)
   $legend.find('.address').text(loc_data.address)
   $legend.find('.city').text(loc_data.city)
   $legend.find('.time').text(loc_data.time)
-  debugger
+  $legend.find('.day').text(loc_data.day)
 }
 
 function createMarker(data, map){
@@ -33,21 +40,23 @@ function createMarker(data, map){
   marker = new google.maps.Marker({
     position: coordinates,
     map: map,
-    title: data.name,
     draggable: false,
-    animation: google.maps.Animation.DROP
+    animation: google.maps.Animation.DROP,
+    data: data
   })
-  
+
   google.maps.event.addListener(marker, 'click', function() {
-    bubbleWindow(this.title).open(map,this)
-    return renderLegend(data)
+    infowindow = infoWindow(this.data.name)
+    infoWindows.push(infowindow)
+    closeAllDumbWindows()
+    infowindow.open(map,this)
+    return renderLegend(this.data,infowindow)
   })
   return marker
 }
 
-function bubbleWindow(text){
-  var infowindow = new google.maps.InfoWindow({ content: text })
-  return infowindow
+function infoWindow(text){
+  return new google.maps.InfoWindow({ content: text })
 }
 
 
