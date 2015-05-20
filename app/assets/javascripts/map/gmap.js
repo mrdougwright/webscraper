@@ -33,6 +33,8 @@ function renderLegend(loc_data,infowindow) {
   $legend.find('.city').text(loc_data.city)
   $legend.find('.time').text(loc_data.time)
   $legend.find('.day').text(loc_data.day)
+  if(loc_data.location_name) $legend.find('.detail_name').text(loc_data.location_name)
+  if(loc_data.location_comment) $legend.find('.detail_notes').text(loc_data.location_comment)
 }
 
 function createMarker(data, map){
