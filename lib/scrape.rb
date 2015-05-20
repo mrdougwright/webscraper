@@ -1,6 +1,6 @@
 class Scrape
 	def self.site(root_url)
-		days = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"]
+		days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
 
 		days.each do |day|
 			url = root_url + day + ".html"
