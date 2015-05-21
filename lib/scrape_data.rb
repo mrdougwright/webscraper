@@ -3,6 +3,17 @@ class ScrapeData
 		@page = FetchPage.from_url(url)
 	end
 
+	def comet_change
+		meta = @page.search('meta').select{|e| !e['property'].nil?}.map{|e| {e['property'] => e['content']} }
+		meta.unshift({'title' => @page.title})
+		meta.unshift({'Page' => @page.uri.to_s.split(/:\/\//).last })
+		meta << {'meta_description' => @page.search('meta').select{|e| e['name']=='Description'}.first.attributes['content'].value}
+		meta << {'h1' => @page.at('h1').text}
+		meta << {'h2' => @page.search('h2').collect{|h2| h2.text.strip} }
+		meta << {'p' => @page.search('p').collect{|p| p.text.strip} }
+		meta
+	end
+
 	def for_places
 		places = []
 		@page.search('tr').each do |el|
