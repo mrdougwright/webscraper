@@ -1,9 +1,22 @@
-Temp Readme
-- Given an array of web pages, traverse each one, grab the content I desire, put the content to a db record for later use.
+#### WIP
+This repo has a scraping feature for basic html tags. It also scrapes for address data and creates a google map.
 
-- Query the db to gather a list of addresses to display on a Google map
+##### Basic HTML scraper
+###### see what a google spider bot sees
+To run this scraper in your development environment, clone the url in your dev console:
+```
+$ git clone https://github.com/mrdougwright/webscraper.git
+$ cd webscraper
+$ rails console
+```
 
-- verify day is saturday
-- grab text value from these classes:
-'.date', '.day_city', '.address', '.location_comment'
+You can then run the `MakeFile` command to scrape a webpage for basic meta, title, h1 and p tag content.
+```
+url = "http://commitchange.com/"
+MakeFile.with_url(url, "filename")
+```
 
+You should see your file added to your directory.
+
+##### Address Scrape to Google Maps
+The address scraper is a bit too site specific at the moment. WIP...
