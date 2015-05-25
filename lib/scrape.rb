@@ -1,3 +1,4 @@
+# script run once to collect data into db
 class Scrape
 	def self.site(root_url)
 		days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
