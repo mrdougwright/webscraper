@@ -51,3 +51,10 @@
 	display: table;
 	clear: both;
 }
+
+span.hidden-hover {
+	color: white;
+}
+span.hidden-hover:hover {
+	color: black;
+}

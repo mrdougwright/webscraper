@@ -1,16 +1,8 @@
-# script run once to collect data into db
 class Scrape
-	def self.site(root_url)
-		days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
-
-		days.each do |day|
-			url = root_url + day + ".html"
+	def self.address_site(urls, scraper_method)
+		urls.each do |url|
 			page = ScrapeData.new(url)
-
-			page.for_places.each do |location|
-				location.merge!(day: day)
-				Place.create(location) # write data to db
-			end
+			page.send(scraper_method).each { |location| Place.create(location) }
 		end
 	end
 end
