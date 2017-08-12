@@ -3,6 +3,6 @@ class Place < ActiveRecord::Base
 	after_validation :geocode
 
 	def full_address
-		"#{address}, #{city}, CA"
+		"#{address}, #{city}, #{state}"
 	end
 end

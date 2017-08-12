@@ -7,7 +7,7 @@ var infoWindows = [];
 
 function initialize() {
   var mapOptions = {
-    center: new google.maps.LatLng(37.7919615,-122.2287941), // Oakland
+    center: new google.maps.LatLng(38.2341965,-85.7437529), // Oakland 37.7919615,-122.2287941
     zoom: 12,
     mapTypeId: google.maps.MapTypeId.NORMAL
   }

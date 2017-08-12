@@ -31,6 +31,7 @@ class ScrapeData
 			end
 			lines = el.text.split("\n")[2..5]
 			tmp_hash[:address] = find_address(lines) unless lines.nil?
+			tmp_hash[:state] = "CA"
 			places << tmp_hash
 		end
 		places
@@ -51,6 +52,33 @@ class ScrapeData
 			tmp_hash[:location_name] = info.at('.location_name').text.strip unless el.at('.location_name').nil?
 			tmp_hash[:address] = info.at('.address').text.strip unless el.at('.address').nil?
 			tmp_hash[:location_comment] = info.at('.location_comment').text.strip unless el.at('.location_comment').nil?
+			tmp_hash[:state] = "CA"
+			places << tmp_hash
+		end
+		places
+	end
+
+	def map_louisville
+		places = []
+		@page.search('.paragraph').each do |el|
+			next if el.children.first.name == 'a'
+			tmp_hash = {}
+			tmp_hash[:day] = @page.at('h2').text.split[0]
+			puts "running on #{tmp_hash[:day]}"
+
+			tmp_hash[:time] = el.at('u').text unless el.at('u').nil?
+			tmp_hash[:name] = "#{tmp_hash[:day]} meeting at #{tmp_hash[:time]}"
+
+			if el.at('a')
+				tmp_hash[:address] = el.at('a').children[0].text
+				if el.at('a').children[2]
+					city_state = el.at('a').children[2].text
+					state = city_state.include?("IN") ? "IN" : "KY"
+					tmp_hash[:city] = city_state.split(state)[0].strip
+					tmp_hash[:state] = state
+				end
+			end
+
 			places << tmp_hash
 		end
 		places
